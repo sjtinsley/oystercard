@@ -14,4 +14,10 @@ describe Oystercard do
     expect{ subject.top_up(25) }.to raise_error
   end
 
+  it 'deducts the fare from the Oyster balance' do
+    subject.top_up(10)
+    subject.deduct(4)
+    expect(subject.balance).to eq 6
+  end
+
 end
