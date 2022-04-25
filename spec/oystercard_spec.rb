@@ -25,4 +25,18 @@ describe Oystercard do
     expect{ subject.touch_in }.to raise_error
   end
 
+  it 'the user can touch in and then is on journey' do
+    subject.touch_in
+    expect(subject.in_journey?).to be_truthy
+  end
+
+  it 'user cannot touch out an Oystercard not on a journey' do
+    expect{ subject.touch_out }.to raise_error
+  end
+
+  it 'user can touch out and is then not on a journey' do
+    subject.touch_in
+    subject.touch_out
+    expect(subject.in_journey?).to be_falsey
+  end
 end

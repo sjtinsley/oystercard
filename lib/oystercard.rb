@@ -31,4 +31,7 @@ class Oystercard
     end
   end
 
+  def touch_out
+    @journey_state ? @journey_state = false : raise
+  end
 end
