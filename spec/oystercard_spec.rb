@@ -20,4 +20,9 @@ describe Oystercard do
     expect(subject.balance).to eq 6
   end
 
+  it 'the user can touch in only once' do
+    subject.touch_in
+    expect{ subject.touch_in }.to raise_error
+  end
+
 end
