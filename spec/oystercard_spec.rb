@@ -39,4 +39,18 @@ describe Oystercard do
     subject.touch_out
     expect(subject.in_journey?).to be_falsey
   end
+
+  context 'when the user has the minimum balance for a single journey' do
+    it 'lets them touch in' do
+      subject.top_up(5)
+      expect{ subject.touch_in }.not_to raise_error
+    end
+  end
+
+  context 'when the user doesn\'t have the minimum balance for a single journey' do
+    it 'doesn\'t let them touch in' do
+      expect{ subject.touch_in }.to raise_error
+    end
+  end
+  
 end
