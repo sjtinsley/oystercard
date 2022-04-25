@@ -21,11 +21,13 @@ describe Oystercard do
   end
 
   it 'the user can touch in only once' do
+    allow(subject).to receive(:balance) {1}
     subject.touch_in
     expect{ subject.touch_in }.to raise_error
   end
 
   it 'the user can touch in and then is on journey' do
+    allow(subject).to receive(:balance) {1}
     subject.touch_in
     expect(subject.in_journey?).to be_truthy
   end
@@ -35,7 +37,7 @@ describe Oystercard do
   end
 
   it 'user can touch out and is then not on a journey' do
-    subject.touch_in
+    allow(subject).to receive(:journey_state) {true}
     subject.touch_out
     expect(subject.in_journey?).to be_falsey
   end
@@ -52,5 +54,5 @@ describe Oystercard do
       expect{ subject.touch_in }.to raise_error
     end
   end
-  
+
 end
