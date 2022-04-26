@@ -36,7 +36,7 @@ class Oystercard
       begin
         raise
       rescue
-        "Sorry, you do not have the minimum balance to make a journey"
+        "Sorry, you do not have the minimum balance of £#{MINIMUM_BALANCE} to make a journey"
       end
     else
     @journey_state = true

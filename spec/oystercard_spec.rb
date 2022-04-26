@@ -51,7 +51,7 @@ describe Oystercard do
 
   context 'when the user doesn\'t have the minimum balance for a single journey' do
     it 'doesn\'t let them touch in' do
-      expect(subject.touch_in).to eq("Sorry, you do not have the minimum balance to make a journey")
+      expect(subject.touch_in).to eq("Sorry, you do not have the minimum balance of £#{Oystercard::MINIMUM_BALANCE} to make a journey")
     end
   end
 
