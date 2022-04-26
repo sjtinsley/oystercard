@@ -1,8 +1,7 @@
 class Oystercard
   MINIMUM_BALANCE = 1
   LIMIT = 90
-  attr_reader :balance
-  attr_reader :journey_state
+  attr_reader :balance, :journey_state, :minimum_balance
 
   def initialize
     @balance = 0
@@ -10,10 +9,11 @@ class Oystercard
   end
 
   def top_up(amount)
-    if @balance + amount > LIMIT
-      fail "Sorry, this would take the balance over the limit of £#{LIMIT}"
-    else
+    begin
+      raise if @balance + amount > LIMIT
       @balance += amount
+    rescue
+      "Sorry, this would take the balance over the limit of £#{LIMIT}"
     end
   end
 
@@ -26,18 +26,29 @@ class Oystercard
   end
 
   def touch_in
-    unless in_journey? or balance < MINIMUM_BALANCE
-      @journey_state = true
+    if in_journey?
+      begin
+        raise
+      rescue
+        "Sorry, you are already on a journey"
+      end
+    elsif balance < MINIMUM_BALANCE
+      begin
+        raise
+      rescue
+        "Sorry, you do not have the minimum balance to make a journey"
+      end
     else
-      raise
+    @journey_state = true
     end
   end
 
   def touch_out
-    if @journey_state = true
-      @journey_state = false
-    else
-      raise
+    begin
+      raise unless in_journey?
+      @journey_state == true
+    rescue
+      "Sorry, you are not on a journey"
     end
   end
 end
